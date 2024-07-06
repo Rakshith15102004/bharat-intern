@@ -1,158 +1,141 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="shortcut icon" href="https://th.bing.com/th/id/OIP.kwE8IapDUTtylieeRnn2YAHaHa?pid=ImgDet&rs=1" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
-    <title>Registration Form</title>
-
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Money Tracker App</title>
     <style>
-        body {
-            background: linear-gradient(to right, #ff66b2, #4b0082); 
-            font-family: 'Times New Roman', Times, serif, sans-serif;
-            margin: 0;
-            overflow: hidden; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh; 
-            position: relative;
-        }
+      .delete-btn {
+        padding: 4px 8px;
+        font-size: 0.875rem;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin: 4px;
+        transition: background-color 0.3s, transform 0.2s;
+      }
 
-        .bubble {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.5); 
-            border-radius: 50%;
-            animation: float 4s infinite; 
-        }
+      .delete-btn:hover {
+        background-color: darkred;
+        transform: scale(1.05);
+      }
 
-        .bubble1 {
-            width: 120px;
-            height: 120px;
-            top: 20%;
-            left: 5%;
-        }
-
-        .bubble2 {
-            width: 80px;
-            height: 80px;
-            top: 40%;
-            left: 70%;
-        }
-
-        .bubble3 {
-            width: 70px;
-            height: 70px;
-            top: 80%;
-            left: 20%;
-        }
-
-        .bubble4 {
-            width: 100px;
-            height: 100px;
-            top: 3%;
-            left: 30%;
-        }
-
-        .bubble5 {
-            width: 90px;
-            height: 90px;
-            top: 80%;
-            left: 90%;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-30px);
-            }
-        }
-
-        .card {
-            text-align: center;
-            padding: 10px; 
-            background-color: rgba(255, 255, 255, 0.2); 
-            border-radius: 20px; 
-            border: none; 
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-            width: 600px; 
-        }
-
-        .card h2, .card p {
-            color: #ffffff; 
-            font-size: 30px; 
-        }
-
-        .form-label {
-             font-size: 20px; 
-        }
-
-        .form-control {
-            font-size: 18px; 
-        }
-
-        .btn-primary {
-            background-color: #8A2BE2;
-            border-color: #8A2BE2;
-            color: #FFFFFF;
-            font-size: 20px;
-            padding: 10px 20px;
-        }
-
-        .btn-primary:hover {
-            background-color: #800080;
-            border-color: #800080;
-            color: #FFFFFF;
-        }
+      .delete-btn:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+      }
     </style>
-</head>
-
-<body class="background-radial-gradient">
-
-    <div class="bubble bubble1"></div>
-    <div class="bubble bubble2"></div>
-    <div class="bubble bubble3"></div>
-    <div class="bubble bubble4"></div>
-    <div class="bubble bubble5"></div>
-
-    <section class="text-center">
-        <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
-        <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
-        <div id="card" class="card mx-9 lg-12 mx-md-5 shadow-5-strong">
-            <div class="card-body px-md-5 align-left">
-
-                <h2 class="fw-bold mb-5">Registration Form</h2>
-                <form method="post" action="/register" style="text-align: left">
-                    <div class="form-outline mb-4">
-                        <label class="form-label" for="form3Example1">Name</label>
-                        <input type="text" id="form3Example1" name="name" class="form-control" />
-                    </div>
-
-                    <div class="form-outline mb-4">
-                        <label class="form-label" for="form3Example3">Email address</label>
-                        <input type="email" id="form3Example3" name="email" class="form-control" />
-                    </div>
-
-                    <div class="form-outline mb-4">
-                        <label class="form-label" for="form3Example4">Password</label>
-                        <input type="password" id="form3Example4" name="password" class="form-control" />
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-block mb-4">
-                        Register
-                    </button>
-                </form>
-            </div>
+  </head>
+  <body
+    class="bg-gradient-to-br from-green-200 via-blue-200 to-purple-200 min-h-screen flex items-center justify-center p-4"
+  >
+    <div class="w-full max-w-4xl mx-auto">
+      <form
+        action="/add"
+        method="POST"
+        class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-indigo-500"
+      >
+        <h1 class="text-3xl font-bold text-center text-indigo-700 mb-6">
+          Money Tracker App
+        </h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mb-4">
+            <label
+              for="category_select"
+              class="block text-gray-700 font-bold mb-2"
+              >Category:</label
+            >
+            <select
+              id="category_select"
+              name="category_select"
+              class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            >
+              <option value="Expense">Expense</option>
+              <option value="Income">Income</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label for="amount_input" class="block text-gray-700 font-bold mb-2"
+              >Amount:</label
+            >
+            <input
+              type="number"
+              id="amount_input"
+              name="amount_input"
+              class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="info" class="block text-gray-700 font-bold mb-2"
+              >Info:</label
+            >
+            <input
+              type="text"
+              id="info"
+              name="info"
+              class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="date_input" class="block text-gray-700 font-bold mb-2"
+              >Date:</label
+            >
+            <input
+              type="date"
+              id="date_input"
+              name="date_input"
+              class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            />
+          </div>
         </div>
-    </section>
+        <button
+          id="add_btn"
+          class="w-full bg-indigo-500 text-white font-bold py-2 px-4 rounded hover:bg-indigo-600 focus:ring-4 focus:ring-indigo-300 transition duration-300"
+        >
+          Add
+        </button>
+      </form>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-</body>
+      <div class="expenses-list mt-8">
+        <h2 class="text-2xl font-bold text-center text-indigo-600 mb-6">
+          Expenses and Incomes List
+        </h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white rounded-lg shadow-lg">
+            <thead class="bg-indigo-500 text-white">
+              <tr>
+                <th class="py-3 px-6 text-center">Category</th>
+                <th class="py-3 px-6 text-center">Amount</th>
+                <th class="py-3 px-6 text-center">Info</th>
+                <th class="py-3 px-6 text-center">Date</th>
+                <th class="py-3 px-6 text-center">Delete</th>
+              </tr>
+            </thead>
+            <tbody id="expense-table-body" class="text-center"></tbody>
+            <tfoot class="bg-green-500 text-white">
+              <tr>
+                <td class="py-3 px-6 font-bold text-center">Total:</td>
+                <td
+                  id="total-amount"
+                  class="py-3 px-6 font-bold text-center"
+                ></td>
+                <td class="py-3 px-6 text-center"></td>
+                <td class="py-3 px-6 text-center"></td>
+                <td class="py-3 px-6 text-center"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
 
+    <script src="script.js"></script>
+  </body>
 </html>
