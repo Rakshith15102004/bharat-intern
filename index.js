@@ -1,55 +1,69 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-const dotenv = require('dotenv');
+
+const express = require("express")
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+
+const app = express ();
 dotenv.config();
+
+const port = process.env.PORT || 3000;
 
 const username = process.env.MONGODB_USERNAME;
 const password = process.env.MONGODB_PASSWORD;
 
-const app = express();
-app.use(bodyParser.json());
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }));
-
-mongoose.connect(
-  `mongodb+srv://${username}:${password}@cluster0.xmaz4v0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`,
-  {
-    serverSelectionTimeoutMS: 5000,
-  }
-);
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-  console.log('Connected to MongoDB');
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.wxmyirm.mongodb.net/registrationFormDB`, {
+    serverSelectionTimeoutMS: 5000, 
 });
 
-app.post("/add", (req,res) =>{
-    var category_select = req.body.category_select
-    var amount_input= req.body.amount_input
-    var info = req.body.info
-    var date_input = req.body.date_input
+const registrationSchema = new mongoose.Schema({
+    name : String,
+    email : String,
+    password : String
+});
 
-    var data={
-        "Category": category_select,
-        "Amount" : amount_input,
-        "Info": info,
-        "Date": date_input
-    }
-    db.collection('users').insertOne(data, (err,collection) => {
-        if(err){
-            throw err;
-        }
-        console.log("Record Inserted Successfully")
+const registration = mongoose.model("Registration", registrationSchema);
 
-    })
+app.use(bodyParser.urlencoded ({ extended: true }));
+app.use(bodyParser.json());
+
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/pages/index.html");
 })
-app.get("/",(req,res) =>{
-    res.set({
-        "Allow-access-Allow-Origin":'*'
-    })
-    return res.redirect('index.html')
-}).listen(5000)
 
-console.log("Listening on port 5000")
+app.post("/register", async (req, res) => {
+    try{
+        const {name, email, password} = req.body;
+
+const existingUser = await registration.findOne({email : email });
+if(!existingUser) {
+    const registrationData = new registration({
+            name, 
+            email,
+            password,
+        });
+        await registrationData.save(); 
+        res.redirect("/success");
+    }
+    else{
+        console.log("User alreadyexist");
+        res.redirect("/error");
+    }
+
+    }    
+    catch (error) {
+    console.log(error);
+    res.redirect("error");
+
+     }    
+});
+
+app.get("/success", (req, res)=>{
+    res.sendFile (__dirname+"/pages/success.html");
+})
+app.get("/error", (req, res)=>{
+    res.sendFile (__dirname+"/pages/error.html");
+})
+app.listen(port, ()=>{
+    console.log(`server is running on port ${port}`);
+})
